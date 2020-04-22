@@ -1,21 +1,16 @@
+import produce from 'immer';
+
 const initialState: InitialState = {
   todos: [],
 };
 
-export const model = (state: InitialState, action: Action) => {
-  if (typeof state === 'undefined') {
-    return initialState;
+export const model = (state: InitialState = initialState, action: Action) => {
+  if (action.type === 'ADD_TODO') {
+    return produce(state, (draftState: InitialState) => {
+      draftState.todos = draftState.todos.concat(action.payload);
+    });
   }
-
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        ...initialState,
-        todos: state.todos.concat([action.payload]),
-      };
-    default:
-      return state;
-  }
+  return state;
 };
 
 interface InitialState {

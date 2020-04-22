@@ -1,20 +1,26 @@
+import produce from 'immer';
 import {put, takeEvery} from 'redux-saga/effects';
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-export const model = (state: number, action: Action) => {
-  if (typeof state === 'undefined') {
-    return 0;
+const initialState: InitialState = {
+  count: 0,
+};
+
+export const model = (state: InitialState = initialState, action: Action) => {
+  if (action.type === 'INCREMENT') {
+    return produce(state, (draftState: InitialState) => {
+      draftState.count = draftState.count + 1;
+    });
   }
 
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
+  if (action.type === 'DECREMENT') {
+    return produce(state, (draftState: InitialState) => {
+      draftState.count = draftState.count - 1;
+    });
   }
+
+  return state;
 };
 
 export const effects = {
@@ -29,6 +35,10 @@ export const sagas = {
     yield takeEvery('INCREMENT_ASYNC', effects.incrementAsync);
   },
 };
+
+interface InitialState {
+  count: number;
+}
 
 interface Action {
   type: string;

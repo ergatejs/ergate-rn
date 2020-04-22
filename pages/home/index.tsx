@@ -14,10 +14,6 @@ const styles = StyleSheet.create({
   },
 });
 
-interface RootState {
-  counter: number;
-}
-
 const mapState = (state: RootState) => ({
   counter: state.counter,
 });
@@ -34,7 +30,7 @@ const HomeScreen = (props: ConnectedProps<typeof connector>) => {
 
   return (
     <View style={styles.home}>
-      <Text>{counter}</Text>
+      <Text>{counter.count}</Text>
       <Button title="Decrement" onPress={() => decrement()} />
       <Button title="IncrementAsync" onPress={() => incrementAsync(2)} />
     </View>
@@ -42,3 +38,9 @@ const HomeScreen = (props: ConnectedProps<typeof connector>) => {
 };
 
 export default connector(HomeScreen);
+
+interface RootState {
+  counter: {
+    count: number;
+  };
+}
