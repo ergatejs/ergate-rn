@@ -1,17 +1,8 @@
-interface Action {
-  type: string;
-  text: string;
-}
-
-interface InitialState {
-  todos: Array<string>;
-}
-
 const initialState: InitialState = {
   todos: [],
 };
 
-const todos = (state: InitialState, action: Action) => {
+export const model = (state: InitialState, action: Action) => {
   if (typeof state === 'undefined') {
     return initialState;
   }
@@ -20,11 +11,18 @@ const todos = (state: InitialState, action: Action) => {
     case 'ADD_TODO':
       return {
         ...initialState,
-        todos: state.todos.concat([action.text]),
+        todos: state.todos.concat([action.payload]),
       };
     default:
       return state;
   }
 };
 
-export default todos;
+interface InitialState {
+  todos: Array<string>;
+}
+
+interface Action {
+  type: string;
+  payload: any;
+}

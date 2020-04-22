@@ -1,8 +1,8 @@
-interface Action {
-  type: string;
-}
+import {put, takeEvery} from 'redux-saga/effects';
 
-const counter = (state: number, action: Action) => {
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+export const model = (state: number, action: Action) => {
   if (typeof state === 'undefined') {
     return 0;
   }
@@ -17,4 +17,20 @@ const counter = (state: number, action: Action) => {
   }
 };
 
-export default counter;
+export const effects = {
+  *incrementAsync(payload: any) {
+    yield delay(1000);
+    yield put({type: 'INCREMENT', payload});
+  },
+};
+
+export const sagas = {
+  *watchIncrementAsync() {
+    yield takeEvery('INCREMENT_ASYNC', effects.incrementAsync);
+  },
+};
+
+interface Action {
+  type: string;
+  payload: any;
+}

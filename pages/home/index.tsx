@@ -24,17 +24,19 @@ const mapState = (state: RootState) => ({
 
 const mapDispatch = {
   decrement: () => ({type: 'DECREMENT'}),
+  incrementAsync: (payload: any) => ({type: 'INCREMENT_ASYNC', payload}),
 };
 
 const connector = connect(mapState, mapDispatch);
 
 const HomeScreen = (props: ConnectedProps<typeof connector>) => {
-  const {counter, decrement} = props;
+  const {counter, decrement, incrementAsync} = props;
 
   return (
     <View style={styles.home}>
       <Text>{counter}</Text>
       <Button title="Decrement" onPress={() => decrement()} />
+      <Button title="IncrementAsync" onPress={() => incrementAsync(2)} />
     </View>
   );
 };
