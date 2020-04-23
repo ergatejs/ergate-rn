@@ -29,7 +29,7 @@ type Props = ConnectedProps<typeof connector> & {
   dispatch: any;
 };
 
-const ProfileScreen = (props: Props) => {
+const ProfilePage = (props: Props) => {
   return (
     <View style={styles.profile}>
       <Text>{props.title}</Text>
@@ -37,4 +37,4 @@ const ProfileScreen = (props: Props) => {
   );
 };
 
-export default connector(ProfileScreen);
+export default connector(ProfilePage);

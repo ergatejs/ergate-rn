@@ -2,15 +2,18 @@
  * @format
  */
 
-import React from 'react';
-import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 
 import store from './store';
-import HomeScreen from './pages/home';
-import ProfileScreen from './pages/profile';
-import WelcomeScreen from './pages/welcome';
+
+import HomePage from './pages/home';
+import ProfilePage from './pages/profile';
+import WelcomePage from './pages/welcome';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,16 +26,24 @@ const ErgateTheme = {
 };
 
 const App = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 5 * 1000);
+  }, []);
+
   return (
-    <Provider store={store}>
-      <NavigationContainer theme={ErgateTheme}>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-          <Tab.Screen name="Welcome" component={WelcomeScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <NavigationContainer theme={ErgateTheme}>
+          <Tab.Navigator>
+            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Profile" component={ProfilePage} />
+            <Tab.Screen name="Welcome" component={WelcomePage} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </SafeAreaProvider>
   );
 };
 

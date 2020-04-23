@@ -25,7 +25,7 @@ const mapDispatch = {
 
 const connector = connect(mapState, mapDispatch);
 
-const HomeScreen = (props: ConnectedProps<typeof connector>) => {
+const HomePage = (props: ConnectedProps<typeof connector>) => {
   const {counter, decrement, incrementAsync} = props;
 
   return (
@@ -37,7 +37,7 @@ const HomeScreen = (props: ConnectedProps<typeof connector>) => {
   );
 };
 
-export default connector(HomeScreen);
+export default connector(HomePage);
 
 interface RootState {
   counter: {
